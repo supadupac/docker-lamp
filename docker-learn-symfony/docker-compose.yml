@@ -1,0 +1,47 @@
+## Docker Tutorial Example
+## Run this docker file instead of using docker run command
+version: "3.7"
+services:
+  service-name:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    image: supadupac/lamp:latest
+    container_name: container
+    hostname: host
+    domainname: name.dev
+    extra_hosts:
+      - "name.dev:127.0.0.1"
+    ports:
+      - 4242:80
+    volumes:
+      - ./app:/var/www/html/
+    environment:
+      DB_HOST: mysql
+      DB_DATABASE: docker
+      DB_USERNAME: docker
+      DB_PASSWORD: docker
+  mysql:
+    image: mysql:5.7
+    container_name: db-name
+    hostname: db-name
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 13306:3306
+    environment:
+      DB_HOST: mysql
+      DB_DATABASE: docker
+      DB_USERNAME: docker
+      DB_PASSWORD: docker
+      MYSQL_ROOT_PASSWORD: docker
+networks:
+  default:
+    external:
+      name: servicename-net
+
+## from project root, run
+# docker-compose up
+# docker-compose up --build
+# docker-compose up --build -d
+# docker-compose down
