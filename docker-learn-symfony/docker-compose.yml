@@ -2,16 +2,13 @@
 ## Run this docker file instead of using docker run command
 version: "3.7"
 services:
-  service-name:
-    build:
-      context: .
-      dockerfile: .docker/Dockerfile
+  learn-symfony:
     image: supadupac/lamp:latest
-    container_name: container
-    hostname: host
-    domainname: name.dev
+    container_name: symfony
+    hostname: symfony
+    domainname: symfony.dev
     extra_hosts:
-      - "name.dev:127.0.0.1"
+      - "symfony.dev:127.0.0.1"
     ports:
       - 4242:80
     volumes:
@@ -23,8 +20,10 @@ services:
       DB_PASSWORD: docker
   mysql:
     image: mysql:5.7
-    container_name: db-name
-    hostname: db-name
+    container_name: db-symfony
+    hostname: db-symfony
+    extra_hosts:
+      - "symfony-db.dev:127.0.0.1"
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
@@ -38,10 +37,10 @@ services:
 networks:
   default:
     external:
-      name: servicename-net
+      name: symfony-net
 
 ## from project root, run
-# docker-compose up
+# docker-compose up -d
 # docker-compose up --build
 # docker-compose up --build -d
 # docker-compose down
