@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
 RUN pecl install redis-5.1.1 \
     && pecl install xdebug-2.8.1 \
     && docker-php-ext-enable redis xdebug
-#RUN docker-php-ext-install pdo_mysql zip exif pcntl
+RUN docker-php-ext-install pdo_mysql
 RUN chown -R www-data:www-data /var/www/html/ && a2enmod rewrite
 RUN service apache2 restart
 
