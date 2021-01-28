@@ -1,4 +1,5 @@
-FROM php:7.4-apache
+#FROM php:7.4-apache
+FROM php:8.0.1-buster-apache
 COPY ./app /var/www/html/
 COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
 RUN apt-get update && apt-get install -y \
@@ -8,8 +9,8 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd
 #install pecl and xdebug
-RUN pecl install redis-5.1.1 \
-    && pecl install xdebug-2.8.1 \
+RUN pecl install redis-5.3.2 \
+    && pecl install xdebug-3.0.2 \
     && docker-php-ext-enable redis xdebug
 #install pdo
 RUN docker-php-ext-install pdo_mysql
