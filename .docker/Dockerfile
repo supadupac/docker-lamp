@@ -1,5 +1,5 @@
 #FROM php:7.4-apache
-FROM php:8.0.1-buster-apache
+FROM php:8.0.2-apache-buster
 COPY ./app /var/www/html/
 COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
 RUN apt-get update && apt-get install -y \
@@ -16,7 +16,11 @@ RUN pecl install redis-5.3.2 \
 RUN docker-php-ext-install pdo_mysql
 #install mysql
 RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+#change permissions for apache folders
 RUN chown -R www-data:www-data /var/www/html/ && a2enmod rewrite
+#insert servername
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+#restart apache
 RUN service apache2 restart
 
 # docker build --file .docker/Dockerfile -t docker-tutorial .
