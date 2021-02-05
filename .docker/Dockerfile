@@ -2,7 +2,7 @@
 FROM php:8.0.2-apache-buster
 COPY ./app /var/www/html/
 COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
-RUN apt-get update && apt-get install -y --no-install-recommends apt-utils \
+RUN apt-get update && apt-get install -y  \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libpng-dev \
